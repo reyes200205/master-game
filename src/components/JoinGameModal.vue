@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: 'joinGameModal', // Le cambié el nombre a Form en lugar de Modal
+  name: 'JoinGameModal',
   props: {
     myData: Object,
     errorMessage: String,

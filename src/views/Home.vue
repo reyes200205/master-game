@@ -124,7 +124,7 @@
 
 <script>
 import socket from '../services/socket';
-import createGameModal from '../components/createGameModal.vue';
+import CreateGameModal from '../components/CreateGameModal.vue';
 import buttonCreate from '../components/buttonCreate.vue';
 import buttonJoin from '../components/buttonJoin.vue';
 import JoinGameModal from '../components/JoinGameModal.vue';
@@ -132,7 +132,7 @@ import JoinGameModal from '../components/JoinGameModal.vue';
 export default {
   name: 'HomeComponent',
   components: {
-    createGameModal,
+    CreateGameModal,
     buttonCreate,
     buttonJoin,
     JoinGameModal
