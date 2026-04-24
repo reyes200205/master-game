@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Si quieres agregar tus colores personalizados (el Cyan y el Dark) */
+@theme {
+  --color-dark-navy: #0A192F;
+  --color-card-blue: #112240;
+  --color-neon-cyan: #64FFDA;
+}
+
+/* Reset básico */
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-dark-navy);
+}
