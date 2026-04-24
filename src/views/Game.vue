@@ -1,5 +1,12 @@
 <template>
   <div class="game-shell">
+    <ConfettiExplosion 
+        v-if="showConfetti" 
+        :colors="confettiColors"
+        :particleCount="180"
+        :force="0.7"
+        :stageHeight="1000"
+      />
     <div class="hud">
       <div class="hud-block">
         <span class="hud-label">Sala</span>
@@ -118,6 +125,8 @@
       <h2 class="title">Ranking final</h2>
       <p class="subtle">Resultado oficial de la sala.</p>
 
+      <p v-if="isWinner" class=" text-green-400">¡Ganaste la partida!</p>
+
       <div class="final-list">
         <div v-for="player in finalLeaderboard" :key="`${player.rank}-${player.username}`" class="final-row">
           <div class="final-left">
@@ -138,11 +147,19 @@
 <script>
 import socket from '../services/socket';
 import { SoundService } from '../services/SoundService';
+import ConfettiExplosion from "vue-confetti-explosion";
+
+
 
 export default {
   name: 'GameView',
+  components: {
+    ConfettiExplosion
+  },
   data() {
     return {
+      showConfetti: false,
+      isWinner: false,
       session: {
         roomId: '',
         username: '',
@@ -221,11 +238,18 @@ export default {
     clearInterval(this.questionTimer);
   },
   methods: {
+    async triggerWinEffect() {
+      this.showConfetti = false;
+
+      await this.$nextTick();
+
+      this.showConfetti = true;
+    },
     startCountdown() {
       const saved = JSON.parse(localStorage.getItem('cibergame_session') || '{}');
-       localStorage.setItem('cibergame_session', JSON.stringify({ ...saved, gameStarted: true }));
+      localStorage.setItem('cibergame_session', JSON.stringify({ ...saved, gameStarted: true }));
 
-       SoundService.play('count');
+      SoundService.play('count');
 
       this._pendingQuestion = null;
       this.countdownValue = 3;
@@ -233,7 +257,7 @@ export default {
 
       this.countdownTimer = setInterval(() => {
         this.countdownValue--;
-        if (this.countdownValue < 0) {          
+        if (this.countdownValue < 0) {
           clearInterval(this.countdownTimer);
           this.countdownTimer = null;
 
@@ -257,7 +281,7 @@ export default {
 
         if (this.session.reconnecting) {
           this.session.reconnecting = false;
-          return; 
+          return;
         }
 
         this.startCountdown();
@@ -328,6 +352,7 @@ export default {
         this.isWinner = isWinner;
 
         if (isWinner) {
+          this.triggerWinEffect();
           SoundService.play('winner2');
         } else {
           SoundService.play('incorrect3');
