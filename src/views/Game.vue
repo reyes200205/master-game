@@ -53,7 +53,7 @@
         </div>
 
         <!-- Timer -->
-        <span class="step-label" :style="{ color: questionTimeLeft <= 5 ? '#E24B4A' : '' }">
+        <span class="step-label" :style="{ color: questionTimeLeft <= 3 ? '#E24B4A' : '' }">
           ⏱ {{ questionTimeLeft }}s
         </span>
       </div>
@@ -149,7 +149,7 @@ export default {
       },
       phase: 'LOADING',
       // --- countdown ---
-      countdownValue: 5,
+      countdownValue: 3,
       countdownTimer: null,
       questionTimer: null,
       questionTimeLeft: 25,
@@ -221,18 +221,19 @@ export default {
     clearInterval(this.questionTimer);
   },
   methods: {
-    // --- NUEVO: countdown 3-2-1 ---
     startCountdown() {
       const saved = JSON.parse(localStorage.getItem('cibergame_session') || '{}');
        localStorage.setItem('cibergame_session', JSON.stringify({ ...saved, gameStarted: true }));
 
+       SoundService.play('count');
+
       this._pendingQuestion = null;
-      this.countdownValue = 5;
+      this.countdownValue = 3;
       this.phase = 'COUNTDOWN';
 
       this.countdownTimer = setInterval(() => {
         this.countdownValue--;
-        if (this.countdownValue < 0) {          // ← era <= 0, ahora < 0
+        if (this.countdownValue < 0) {          
           clearInterval(this.countdownTimer);
           this.countdownTimer = null;
 
@@ -282,8 +283,6 @@ export default {
         if (!payload || payload.roomId !== this.session.roomId) {
           return;
         }
-
-
         if (this.countdownTimer) {
           this._pendingQuestion = payload;
           return;
@@ -308,7 +307,7 @@ export default {
           if (meResult.isCorrect) {
             SoundService.play('correct');
           } else {
-            SoundService.play('incorrect2');
+            SoundService.play('incorrect');
           }
         } else {
           console.error('No se pudo encontrar el resultado del jugador en la ronda.');
@@ -324,6 +323,15 @@ export default {
         this.finalLeaderboard = payload.leaderboard || [];
         this.hasAnswered = false;
         this.roundResult = null;
+
+        const isWinner = payload.leaderboard?.[0]?.username === this.session.username;
+        this.isWinner = isWinner;
+
+        if (isWinner) {
+          SoundService.play('winner2');
+        } else {
+          SoundService.play('incorrect3');
+        }
         localStorage.removeItem('cibergame_session');
       };
 

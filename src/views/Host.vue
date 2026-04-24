@@ -343,7 +343,7 @@ export default {
     clearInterval(this.countdownTimer); // agregar esta línea
   },
   methods: {
-    startCountdown(seconds = 6) {
+    startCountdown(seconds = 3) {
       this.countdownValue = seconds;
       this.showCountdown = true;
 
@@ -399,7 +399,7 @@ export default {
 
         this.gameStarted = true;
         this.gameOver = false;
-        this.startCountdown(payload.countdownSeconds ?? 5);
+        this.startCountdown(payload.countdownSeconds ?? 3);
       };
 
       this.onRoomData = (room) => {
