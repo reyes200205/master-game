@@ -158,6 +158,8 @@ export default {
     return {
       showConfetti: false,
       isWinner: false,
+      winners: [],
+      isTie: false,
       session: {
         roomId: '',
         username: '',
