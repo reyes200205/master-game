@@ -94,7 +94,7 @@
         <div class="flex-1 flex items-center justify-center overflow-hidden">
           <img v-if="currentQuestionImage" :src="`/questions/${currentQuestionImage}.jpg`"
             alt="Imagen de prueba de Phishing"
-            class="w-full h-auto max-h-[70vh] object-contain rounded-lg shadow-xl border border-blue-900/30" />
+            class="w-full z-50 h-auto max-h-[70vh] object-contain rounded-lg shadow-xl border border-blue-900/30" />
         </div>
       </div>
 

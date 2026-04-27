@@ -37,7 +37,7 @@ export default {
     errorMessage: String,
   },
   mounted() {
-    this.myData.roomId  = Math.random().toString(36).substring(2, 8).toUpperCase();
+    this.myData.roomId  = Math.random().toString(36).substring(2, 6).toUpperCase();
   },
   methods: {
     goHome() {
