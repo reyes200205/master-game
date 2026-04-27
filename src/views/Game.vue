@@ -1,12 +1,7 @@
 <template>
   <div class="game-shell">
-    <ConfettiExplosion 
-        v-if="showConfetti" 
-        :colors="confettiColors"
-        :particleCount="180"
-        :force="0.7"
-        :stageHeight="1000"
-      />
+    <ConfettiExplosion v-if="showConfetti" :colors="confettiColors" :particleCount="180" :force="0.7"
+      :stageHeight="1000" />
     <div class="hud">
       <div class="hud-block">
         <span class="hud-label">Sala</span>
@@ -125,7 +120,10 @@
       <h2 class="title">Ranking final</h2>
       <p class="subtle">Resultado oficial de la sala.</p>
 
-      <p v-if="isWinner" class=" text-green-400">¡Ganaste la partida!</p>
+      <p v-if="isWinner && !isTie" class="text-green-400">¡Ganaste la partida!</p>
+      <p v-else-if="isWinner && isTie" class="text-yellow-400">
+        ¡Empate! Ganaron: {{ winners.join(', ') }}
+      </p>
 
       <div class="final-list">
         <div v-for="player in finalLeaderboard" :key="`${player.rank}-${player.username}`" class="final-row">
@@ -348,8 +346,12 @@ export default {
         this.hasAnswered = false;
         this.roundResult = null;
 
-        const isWinner = payload.leaderboard?.[0]?.username === this.session.username;
+        const winners = payload.winners || [];
+        const isTie = winners.length > 1;
+        const isWinner = winners.includes(this.session.username);
         this.isWinner = isWinner;
+        this.isTie = isTie;
+        this.winners = winners;
 
         if (isWinner) {
           this.triggerWinEffect();
