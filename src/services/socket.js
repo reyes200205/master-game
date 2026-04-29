@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // Esta constante detecta si estás en producción o local automáticamente
-const isProduction = true;
+const isProduction = false;
 let SOCKET_URL = null;
 
 if (isProduction) {
