@@ -16,7 +16,7 @@
       </p>
       <h1 class="text-5xl text-blue-300 drop-shadow-[0_0_8px_rgba(55,138,221,0.8)] font-bold text-center mb-1">¿Real o
         Pishing?</h1>
-      <p class="text-[14px] mt-1 mb-2" style="color:#4a7a9b;">Pon a prueba tu instinto de seguridad digital</p>
+      <p class="text-[14px] mt-1 mb-2" style="color:#4a7a9b;">Pon a prueba tu instinto de seguridad digital v.1.0</p> 
 
       <div class="flex p-1 rounded-xl bg-[#0d1b2a] border border-blue-900/30 w-full max-w-md">
         <button @click="role = 'player'" :class="role === 'player'
