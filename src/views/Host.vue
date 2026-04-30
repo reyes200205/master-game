@@ -113,8 +113,8 @@
             </p>
 
             <!-- Barra animada -->
-            <div class="relative rounded-t-lg overflow-hidden w-full"
-              style="transition: height 0.8s cubic-bezier(0.34,1.56,0.64,1);" :style="{
+            <div class="relative rounded-t-lg overflow-hidden"
+              style="width:70%; transition: height 0.8s cubic-bezier(0.34,1.56,0.64,1);" :style="{
                 height: maxScore > 0 ? Math.max((player.score / maxScore) * 180, 6) + 'px' : '6px',
                 background: 'rgba(55,138,221,0.12)',
                 border: '0.5px solid rgba(55,138,221,0.2)'
@@ -152,7 +152,8 @@
             </div>
 
             <!-- Nombre -->
-            <p class="text-center mt-1 w-full truncate" style="font-size:30px;color:#7BAFD4;">
+            <p class="text-center mt-1 w-full"
+              style="font-size:clamp(11px, 2vw, 18px);color:#7BAFD4;word-break:break-word;line-height:1.2;">
               {{ player.username }}
             </p>
 
