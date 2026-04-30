@@ -103,25 +103,28 @@
         style="background:rgba(13,45,78,0.95);border:0.5px solid rgba(55,138,221,0.25);">
 
         <!-- Barras del pódium -->
-        <div class="flex items-end justify-center gap-2 flex-1" style="min-height:200px;padding-bottom:4px;">
-          <div v-for="(player, rank) in sortedPlayers" :key="player.username" class="flex flex-col items-center"
-            :style="{ width: barWidth }">
+        <div class="flex items-end justify-center flex-1"
+          style="min-height:200px; padding-bottom:4px; gap: clamp(4px, 2vw, 16px);">
+
+          <div v-for="(player, rank) in sortedPlayers" :key="player.username"
+            class="flex flex-col items-center flex-1 min-w-0" :style="{ maxWidth: barMaxWidth }">
 
             <!-- Score flotante arriba de la barra -->
-            <p class="font-bold transition-all duration-500 mb-1" style="font-size:15px;color:#E6F1FB;line-height:1;">
+            <p class="font-bold transition-all duration-500 mb-1 w-full text-center"
+              style="font-size:15px;color:#E6F1FB;line-height:1;">
               {{ player.score }}
             </p>
 
             <!-- Barra animada -->
             <div class="relative rounded-t-lg overflow-hidden"
-              style="width:70%; transition: height 0.8s cubic-bezier(0.34,1.56,0.64,1);" :style="{
+              style="width:60%; transition: height 0.8s cubic-bezier(0.34,1.56,0.64,1);" :style="{
                 height: maxScore > 0 ? Math.max((player.score / maxScore) * 180, 6) + 'px' : '6px',
                 background: 'rgba(55,138,221,0.12)',
                 border: '0.5px solid rgba(55,138,221,0.2)'
               }">
+
               <!-- Fill de color del jugador -->
-              <div class="absolute inset-0 rounded-t-lg" :style="{ background: playerColor(rank) }">
-              </div>
+              <div class="absolute inset-0 rounded-t-lg" :style="{ background: playerColor(rank) }"></div>
 
               <!-- Flash al responder correcto -->
               <div v-if="player._justAnswered && player._isCorrect" class="absolute inset-0 rounded-t-lg animate-pulse"
@@ -151,9 +154,8 @@
             }">
             </div>
 
-            <!-- Nombre -->
-            <p class="text-center mt-1 w-full"
-              style="font-size:clamp(11px, 2vw, 18px);color:#7BAFD4;word-break:break-word;line-height:1.2;">
+            <!-- Nombre (máx 2 líneas) -->
+            <p class="text-center mt-1 w-full text-lg leading-tight break-words line-clamp-2" style="color:#7BAFD4;">
               {{ player.username }}
             </p>
 
@@ -300,12 +302,12 @@ export default {
     maxScore() {
       return Math.max(...this.players.map(p => p.score), 1)
     },
-    barWidth() {
+    barMaxWidth() {
       const n = this.players.length
-      if (n <= 4) return '80px'
-      if (n <= 8) return '60px'
-      if (n <= 12) return '48px'
-      return '36px'
+      if (n <= 4) return '120px'
+      if (n <= 8) return '90px'
+      if (n <= 12) return '70px'
+      return '56px'
     },
     sortedPlayers() {
       return [...this.players].sort((a, b) => b.score - a.score);
