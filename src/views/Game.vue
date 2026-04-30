@@ -397,14 +397,29 @@ export default {
       // --- timer ---
       clearInterval(this.questionTimer);
       this.questionTimeLeft = this.questionDuration;
+
+      SoundService.setRate('tictac2', 1.0);
+      SoundService.play('tictac2');
+
       this.questionTimer = setInterval(() => {
         this.questionTimeLeft--;
+
+        const ratio = this.questionTimeLeft / this.questionDuration;
+        if (ratio > 0.4) {
+          SoundService.setRate('tictac2', 1.0);
+        } else if (ratio > 0.2) {
+          SoundService.setRate('tictac2', 1.4);
+        } else {
+          SoundService.setRate('tictac2', 1.8);
+        }
+
         if (this.questionTimeLeft <= 0) {
           clearInterval(this.questionTimer);
           this.questionTimer = null;
           if (!this.hasAnswered) {
             this.hasAnswered = true;
             this.selectedAnswerIndex = null;
+            SoundService.stop('tictac2');
             socket.emit('submit_answer', {
               roomId: this.session.roomId,
               username: this.session.username,
@@ -431,6 +446,8 @@ export default {
 
       this.selectedAnswerIndex = index;
       this.hasAnswered = true;
+
+      SoundService.stop('tictac2');
 
       socket.emit('submit_answer', {
         roomId: this.session.roomId,
