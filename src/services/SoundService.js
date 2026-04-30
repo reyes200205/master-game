@@ -5,7 +5,7 @@ const sounds = {
     incorrect3: new Audio('/sounds/incorrect3.mp3'),
     winner : new Audio('/sounds/winner.mp3'),
     winner2 : new Audio('/sounds/winner2.mp3'),
-    count: new Audio('/sounds/countdown.mp3'),
+    count: new Audio('/sounds/count.mp3'),
 }
 
 export const SoundService = {
