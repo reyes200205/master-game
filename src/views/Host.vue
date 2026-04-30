@@ -152,7 +152,7 @@
             </div>
 
             <!-- Nombre -->
-            <p class="text-center mt-1 w-full truncate" style="font-size:11px;color:#7BAFD4;">
+            <p class="text-center mt-1 w-full truncate" style="font-size:30px;color:#7BAFD4;">
               {{ player.username }}
             </p>
 
